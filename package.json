@@ -1,7 +1,7 @@
 {
-  "name": "example-addon-experiment",
-  "version": "1.0.0",
-  "description": "An example extension for an add-on experiment.",
+  "name": "dynamic-result-type-extension",
+  "version": "1.0a",
+  "description": "An example extension for dynamic result types.",
   "private": true,
   "license": "MPLv2",
   "webExt": {
