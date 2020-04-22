@@ -78,12 +78,6 @@ class ProviderDynamicExtensionTest extends UrlbarProvider {
       button: {
         textContent: "Click Me",
       },
-//       title: {
-//         l10n: result.payload.titleTextData,
-//       },
-//       button: {
-//         l10n: result.payload.buttonTextData,
-//       },
       help: {
         style: {
           display: result.payload.helpUrl ? "" : "none",
