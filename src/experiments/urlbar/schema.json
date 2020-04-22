@@ -1,0 +1,65 @@
+[
+  {
+    "namespace": "experiments.urlbar",
+    "description": "APIs supporting urlbar experiments",
+    "types": [
+      {
+        "id": "DynamicResultType",
+        "type": "object",
+        "description": "Describes a dynamic result type.",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The name of the type."
+          },
+          "viewTemplate": {
+            "type": "object",
+            "description": "An object describing the type's view.",
+            "additionalProperties": true
+          }
+        }
+      }
+    ],
+    "events": [
+      {
+        "name": "onViewUpdateRequested",
+        "type": "function",
+        "description": "Fired when the urlbar view updates the view of one of the results of the provider.",
+        "parameters": [
+          {
+            "name": "payload",
+            "type": "object",
+            "description": "The result's payload."
+          }
+        ],
+        "extraParameters": [
+          {
+            "name": "providerName",
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9_-]+$",
+            "description": "The name of the provider you want to provide updates for."
+          }
+        ],
+        "returns": {
+          "type": "object",
+          "description": "An object describing the view update."
+        }
+      }
+    ],
+    "functions": [
+      {
+        "name": "addDynamicResultType",
+        "type": "function",
+        "async": true,
+        "description": "Adds a dynamic result type.",
+        "parameters": [
+          {
+            "name": "type",
+            "$ref": "DynamicResultType",
+            "description": "An object describing the result type."
+          }
+        ]
+      }
+    ]
+  }
+]
