@@ -8,8 +8,7 @@
   padding-inline-end: calc(/*@urlbarViewItemInlinePadding@*/ 6px + 4px);
 }
 
-.urlbarView-dynamic-test-icon,
-.testDynamicType-icon {
+.urlbarView-dynamic-test-icon {
   min-width: 24px;
   height: 24px;
   margin-inline-end: 12px;
@@ -19,8 +18,7 @@
 }
 
 /* The help icon is a standard Photon ghost button. */
-.urlbarView-dynamic-test-help,
-.testDynamicType-help {
+.urlbarView-dynamic-test-help {
   min-width: 16px;
   height: 32px;
   background-image: url("chrome://global/skin/icons/help.svg");
@@ -32,18 +30,15 @@
   -moz-context-properties: fill, fill-opacity;
 }
 
-.urlbarView-dynamic-test-help[selected],
-.testDynamicType-help[selected] {
+.urlbarView-dynamic-test-help[selected] {
   box-shadow: 0 0 0 1px #0a84ff inset, 0 0 0 1px #0a84ff, 0 0 0 4px rgba(10, 132, 255, 0.3);
 }
 
-.urlbarView-dynamic-test-help:hover,
-.testDynamicType-help:hover {
+.urlbarView-dynamic-test-help:hover {
   background-color: var(--urlbarView-button-background-hover);
 }
 
-.urlbarView-dynamic-test-help:active,
-.testDynamicType-help:active {
+.urlbarView-dynamic-test-help:active {
   background-color: var(--urlbarView-button-background-active);
 }
 
@@ -71,18 +66,13 @@
 .urlbarView-dynamic-test-icon,
 .urlbarView-dynamic-test-title,
 .urlbarView-dynamic-test-button,
-.urlbarView-dynamic-test-help,
-.testDynamicType-icon,
-.testDynamicType-title,
-.testDynamicType-button,
-.testDynamicType-help {
+.urlbarView-dynamic-test-help {
   margin-block-end: 16px;
 }
 
 /* The tip button is a Photon default button when unfocused and a
    primary button in all other states. */
-.urlbarView-dynamic-test-button,
-.testDynamicType-button {
+.urlbarView-dynamic-test-button {
   min-height: 16px;
   padding: 8px;
   border: none;
@@ -96,33 +86,28 @@
   flex-shrink: 0;
 }
 
-.urlbarView-dynamic-test-button[selected],
-.testDynamicType-button[selected] {
+.urlbarView-dynamic-test-button[selected] {
   color: white;
   background-color: var(--urlbarView-primary-button-background);
   box-shadow: 0 0 0 1px #0a84ff inset, 0 0 0 1px #0a84ff, 0 0 0 4px rgba(10, 132, 255, 0.3);
 }
-.urlbarView-dynamic-test-button:hover,
-.testDynamicType-button:hover {
+.urlbarView-dynamic-test-button:hover {
   color: white;
   background-color: var(--urlbarView-primary-button-background-hover);
 }
 
-.urlbarView-dynamic-test-button:active,
-.testDynamicType-button:hover:active {
+.urlbarView-dynamic-test-button:active {
   color: white;
   background-color: var(--urlbarView-primary-button-background-active);
 }
 
-.urlbarView-dynamic-test-buttonSpacer,
-.testDynamicType-buttonSpacer {
+.urlbarView-dynamic-test-buttonSpacer {
   flex-basis: 48px;
   flex-grow: 1;
   flex-shrink: 1;
 }
 
-.urlbarView-dynamic-test-title,
-.testDynamicType-title {
+.urlbarView-dynamic-test-title {
   white-space: normal;
   /* Give the tip title appropriate flex so that when the window is narrow, the
      tip buttons wrap around under it.  We want the icon and title to remain on
