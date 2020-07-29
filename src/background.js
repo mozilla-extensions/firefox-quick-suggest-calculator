@@ -5,7 +5,7 @@
 "use strict";
 
 // Our dynamic type is registered under this name.
-const DYNAMIC_TYPE_NAME = "testDynamicType";
+const DYNAMIC_TYPE_NAME = "test";
 
 // Our provider.
 class ProviderDynamicExtensionTest extends UrlbarProvider {
@@ -13,42 +13,40 @@ class ProviderDynamicExtensionTest extends UrlbarProvider {
     super();
 
     // Register our dynamic result type.
-    UrlbarResult.addDynamicResultType({
-      type: DYNAMIC_TYPE_NAME,
-      viewTemplate: {
-        stylesheet: "data/style.css",
-        attributes: {
-          role: "group",
-        },
-        children: [
-          {
-            name: "icon",
-            tag: "img",
-          },
-          {
-            name: "title",
-            tag: "span",
-          },
-          {
-            name: "buttonSpacer",
-            tag: "span",
-          },
-          {
-            name: "button",
-            tag: "span",
-            attributes: {
-              role: "button",
-            },
-          },
-          {
-            name: "help",
-            tag: "span",
-            attributes: {
-              role: "button",
-            },
-          },
-        ],
+    UrlbarResult.addDynamicResultType(DYNAMIC_TYPE_NAME);
+    UrlbarView.addDynamicViewTemplate(DYNAMIC_TYPE_NAME, {
+      stylesheet: "data/style.css",
+      attributes: {
+        role: "group",
       },
+      children: [
+        {
+          name: "icon",
+          tag: "img",
+        },
+        {
+          name: "title",
+          tag: "span",
+        },
+        {
+          name: "buttonSpacer",
+          tag: "span",
+        },
+        {
+          name: "button",
+          tag: "span",
+          attributes: {
+            role: "button",
+          },
+        },
+        {
+          name: "help",
+          tag: "span",
+          attributes: {
+            role: "button",
+          },
+        },
+      ],
     });
   }
 
@@ -92,6 +90,7 @@ class ProviderDynamicExtensionTest extends UrlbarProvider {
       UrlbarUtils.RESULT_SOURCE.OTHER_LOCAL,
       {
         dynamicType: DYNAMIC_TYPE_NAME,
+        helpUrl: "http://example.com/",
       }
     );
     result.suggestedIndex = 1;

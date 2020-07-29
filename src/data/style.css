@@ -1,6 +1,6 @@
 /* Copied and adapted from urlbar-autocomplete.inc.css */
 
-.urlbarView-row[dynamicType=testDynamicType] {
+.urlbarView-row[dynamicType=test] {
   padding-block-start: 18px;
   /* Compensating for the 16px bottom margin on the tip elements. */
   padding-block-end: calc(18px - 16px);
@@ -8,6 +8,7 @@
   padding-inline-end: calc(/*@urlbarViewItemInlinePadding@*/ 6px + 4px);
 }
 
+.urlbarView-dynamic-test-icon,
 .testDynamicType-icon {
   min-width: 24px;
   height: 24px;
@@ -18,6 +19,7 @@
 }
 
 /* The help icon is a standard Photon ghost button. */
+.urlbarView-dynamic-test-help,
 .testDynamicType-help {
   min-width: 16px;
   height: 32px;
@@ -30,29 +32,32 @@
   -moz-context-properties: fill, fill-opacity;
 }
 
+.urlbarView-dynamic-test-help[selected],
 .testDynamicType-help[selected] {
   box-shadow: 0 0 0 1px #0a84ff inset, 0 0 0 1px #0a84ff, 0 0 0 4px rgba(10, 132, 255, 0.3);
 }
 
+.urlbarView-dynamic-test-help:hover,
 .testDynamicType-help:hover {
   background-color: var(--urlbarView-button-background-hover);
 }
 
+.urlbarView-dynamic-test-help:active,
 .testDynamicType-help:active {
   background-color: var(--urlbarView-button-background-active);
 }
 
-.urlbarView-row[dynamicType=testDynamicType]:not(:last-child) {
+.urlbarView-row[dynamicType=test]:not(:last-child) {
   border-bottom: 1px solid var(--panel-separator-color);
   margin-bottom: 4px;
 }
 
-.urlbarView-row[dynamicType=testDynamicType]:not(:first-child) {
+.urlbarView-row[dynamicType=test]:not(:first-child) {
   border-top: 1px solid var(--panel-separator-color);
   margin-top: 4px;
 }
 
-.urlbarView-row[dynamicType=testDynamicType] > .urlbarView-row-inner {
+.urlbarView-row[dynamicType=test] > .urlbarView-row-inner {
   display: flex;
   align-items: center;
   min-height: 32px;
@@ -63,6 +68,10 @@
    and the buttons wrap below it, there's space between it and the buttons.  We
    then need to give the same bottom margin to the other tip elements so that
    they all remain vertically aligned. */
+.urlbarView-dynamic-test-icon,
+.urlbarView-dynamic-test-title,
+.urlbarView-dynamic-test-button,
+.urlbarView-dynamic-test-help,
 .testDynamicType-icon,
 .testDynamicType-title,
 .testDynamicType-button,
@@ -72,6 +81,7 @@
 
 /* The tip button is a Photon default button when unfocused and a
    primary button in all other states. */
+.urlbarView-dynamic-test-button,
 .testDynamicType-button {
   min-height: 16px;
   padding: 8px;
@@ -86,27 +96,32 @@
   flex-shrink: 0;
 }
 
+.urlbarView-dynamic-test-button[selected],
 .testDynamicType-button[selected] {
   color: white;
   background-color: var(--urlbarView-primary-button-background);
   box-shadow: 0 0 0 1px #0a84ff inset, 0 0 0 1px #0a84ff, 0 0 0 4px rgba(10, 132, 255, 0.3);
 }
+.urlbarView-dynamic-test-button:hover,
 .testDynamicType-button:hover {
   color: white;
   background-color: var(--urlbarView-primary-button-background-hover);
 }
 
+.urlbarView-dynamic-test-button:active,
 .testDynamicType-button:hover:active {
   color: white;
   background-color: var(--urlbarView-primary-button-background-active);
 }
 
+.urlbarView-dynamic-test-buttonSpacer,
 .testDynamicType-buttonSpacer {
   flex-basis: 48px;
   flex-grow: 1;
   flex-shrink: 1;
 }
 
+.urlbarView-dynamic-test-title,
 .testDynamicType-title {
   white-space: normal;
   /* Give the tip title appropriate flex so that when the window is narrow, the
