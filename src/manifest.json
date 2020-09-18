@@ -1,17 +1,17 @@
 {
   "manifest_version": 2,
-  "name": "Dynamic Result Type Test",
+  "name": "Dynamic Unit Conversion",
   "version": "1.0a",
   "description": "An example extension for dynamic result types.",
   "applications": {
     "gecko": {
-      "id": "urlbar-dynamic-type-example@mozilla.org",
+      "id": "urlbar-unit-conversion@mozilla.org",
       "strict_min_version": "69"
     }
   },
   "browser_specific_settings": {
     "gecko": {
-      "id": "urlbar-dynamic-type-example@mozilla.org",
+      "id": "urlbar-unit-conversion@mozilla.org",
       "strict_min_version": "69"
     }
   },

@@ -4,15 +4,32 @@
 
 "use strict";
 
-// Our dynamic type is registered under this name.
-const DYNAMIC_TYPE_NAME = "test";
+const DYNAMIC_TYPE_NAME = "dynamicUnitConversion";
 
-// Our provider.
-class ProviderDynamicExtensionTest extends UrlbarProvider {
+const LENGTH = {
+  "meter": 1,
+  "m": 1,
+  "nanometer": 1000000000,
+  "micrometer": 1000000,
+  "millimeter": 1000,
+  "mm": 1000,
+  "centimeter": 100,
+  "cm": 100,
+  "kilometer": 0.001,
+  "km": 0.001,
+  "mile": 0.0006213689,
+  "yard": 1.0936132983,
+  "foot": 3.280839895,
+  "inch": 39.37007874,
+};
+
+const NUMBER_REGEX = "^\\d+(?:\\.\\d+)?\\s*";
+const UNIT_REGEX = "\\w+";
+const QUERY_REGEX = `(${NUMBER_REGEX})(${UNIT_REGEX})\\s+in\\s+(${UNIT_REGEX})`;
+
+class UnitConverter extends UrlbarProvider {
   constructor() {
     super();
-
-    // Register our dynamic result type.
     UrlbarResult.addDynamicResultType(DYNAMIC_TYPE_NAME);
     UrlbarView.addDynamicViewTemplate(DYNAMIC_TYPE_NAME, {
       stylesheet: "data/style.css",
@@ -21,76 +38,78 @@ class ProviderDynamicExtensionTest extends UrlbarProvider {
       },
       children: [
         {
-          name: "icon",
-          tag: "img",
+          name: "info",
+          tag: "div",
+          children: [
+            {
+              name: "input",
+              tag: "span",
+            },
+            {
+              name: "equal",
+              tag: "span",
+            },
+            {
+              name: "output",
+              tag: "span",
+            },
+          ],
         },
-        {
-          name: "title",
-          tag: "span",
-        },
-        {
-          name: "buttonSpacer",
-          tag: "span",
-        },
-        {
-          name: "button",
-          tag: "span",
-          attributes: {
-            role: "button",
-          },
-        },
-        {
-          name: "help",
-          tag: "span",
-          attributes: {
-            role: "button",
-          },
-        },
-      ],
+      ]
     });
   }
 
   get name() {
-    return "ProviderDynamicExtensionTest";
+    return "UnitConverter";
   }
 
   getPriority(queryContext) {
     return 0;
   }
 
-  isActive(queryContext) {
-    return true;
+  async isActive(queryContext) {
+    const regexResult = queryContext.searchString.match(QUERY_REGEX);
+    if (!regexResult) {
+      return false;
+    }
+
+    const inputUnit = regexResult[2];
+    const outputUnit = regexResult[3];
+
+    return LENGTH[inputUnit] && LENGTH[outputUnit];
   }
 
-  // Updates the result's view.
   getViewUpdate(result) {
-    return {
-      icon: {
-        attributes: {
-          src: result.payload.icon || "chrome://browser/skin/tip.svg",
-        },
+    const viewUpdate = {
+      input: {
+        textContent: result.payload.input,
       },
-      title: {
-        textContent: "This is a dynamic result that looks like a tip.",
+      equal: {
+        textContent: result.payload.equal,
       },
-      button: {
-        textContent: "Click Me",
-      },
-      help: {
-        style: {
-          display: result.payload.helpUrl ? "" : "none",
-        },
+      output: {
+        textContent: result.payload.output,
       },
     };
+
+    return viewUpdate;
   }
 
   async startQuery(queryContext, addCallback) {
-    let result = new UrlbarResult(
+    const regexResult = queryContext.searchString.match(QUERY_REGEX);
+    const inputNumber = Number(regexResult[1]);
+    const inputUnit = regexResult[2];
+    const outputUnit = regexResult[3];
+    const outputNumber = inputNumber / LENGTH[inputUnit] * LENGTH[outputUnit];
+
+    const result = new UrlbarResult(
       UrlbarUtils.RESULT_TYPE.DYNAMIC,
-      UrlbarUtils.RESULT_SOURCE.OTHER_LOCAL,
+      UrlbarUtils.RESULT_SOURCE.OTHER_NETWORK,
       {
+        input: `${inputNumber}${inputUnit}`,
+        output: `${outputNumber}${outputUnit}`,
+        equal: " = ",
         dynamicType: DYNAMIC_TYPE_NAME,
-        helpUrl: "http://example.com/",
       }
     );
     result.suggestedIndex = 1;
@@ -98,6 +117,7 @@ class ProviderDynamicExtensionTest extends UrlbarProvider {
   }
 
   cancelQuery(queryContext) {
+    console.log("cancelQuery!", result);
   }
 
   pickResult(result) {
@@ -105,9 +125,6 @@ class ProviderDynamicExtensionTest extends UrlbarProvider {
   }
 }
 
-// main
-let testProvider;
-(async function main() {
-  testProvider = new ProviderDynamicExtensionTest();
-  addProvider(testProvider);
+(async function() {
+  addProvider(new UnitConverter());
 })();
