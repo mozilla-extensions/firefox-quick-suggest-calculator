@@ -4,30 +4,14 @@
 
 "use strict";
 
-const DYNAMIC_TYPE_NAME = "dynamicUnitConversion";
+const DYNAMIC_TYPE_NAME = "dynamicConversion";
 
-const LENGTH = {
-  "meter": 1,
-  "m": 1,
-  "nanometer": 1000000000,
-  "micrometer": 1000000,
-  "millimeter": 1000,
-  "mm": 1000,
-  "centimeter": 100,
-  "cm": 100,
-  "kilometer": 0.001,
-  "km": 0.001,
-  "mile": 0.0006213689,
-  "yard": 1.0936132983,
-  "foot": 3.280839895,
-  "inch": 39.37007874,
-};
+const CONVERTERS = [
+  new UnitConverter(),
+  new TimezoneConverter(),
+];
 
-const NUMBER_REGEX = "^\\d+(?:\\.\\d+)?\\s*";
-const UNIT_REGEX = "\\w+";
-const QUERY_REGEX = `(${NUMBER_REGEX})(${UNIT_REGEX})\\s+in\\s+(${UNIT_REGEX})`;
-
-class UnitConverter extends UrlbarProvider {
+class DynamicConverter extends UrlbarProvider {
   constructor() {
     super();
     UrlbarResult.addDynamicResultType(DYNAMIC_TYPE_NAME);
@@ -60,23 +44,21 @@ class UnitConverter extends UrlbarProvider {
   }
 
   get name() {
-    return "UnitConverter";
+    return "DynamicConverter";
   }
 
   getPriority(queryContext) {
     return 0;
   }
 
-  async isActive(queryContext) {
-    const regexResult = queryContext.searchString.match(QUERY_REGEX);
-    if (!regexResult) {
-      return false;
+  isActive(queryContext) {
+    for (const converter of CONVERTERS) {
+      if (converter.isActive(queryContext)) {
+        return true;
+      }
     }
 
-    const inputUnit = regexResult[2];
-    const outputUnit = regexResult[3];
-
-    return LENGTH[inputUnit] && LENGTH[outputUnit];
+    return false;
   }
 
   getViewUpdate(result) {
@@ -95,30 +77,29 @@ class UnitConverter extends UrlbarProvider {
     return viewUpdate;
   }
 
-  async startQuery(queryContext, addCallback) {
-    const regexResult = queryContext.searchString.match(QUERY_REGEX);
-    const inputNumber = Number(regexResult[1]);
-    const inputUnit = regexResult[2];
-    const outputUnit = regexResult[3];
-    const outputNumber = inputNumber / LENGTH[inputUnit] * LENGTH[outputUnit];
+  startQuery(queryContext, addCallback) {
+    for (const converter of CONVERTERS) {
+      if (converter.isActive(queryContext)) {
+        const { input, output, equal } = converter.startQuery(queryContext);
 
-    const result = new UrlbarResult(
-      UrlbarUtils.RESULT_TYPE.DYNAMIC,
-      UrlbarUtils.RESULT_SOURCE.OTHER_NETWORK,
-      {
-        input: `${inputNumber}${inputUnit}`,
-        output: `${outputNumber}${outputUnit}`,
-        equal: " = ",
-        dynamicType: DYNAMIC_TYPE_NAME,
+        const result = new UrlbarResult(
+          UrlbarUtils.RESULT_TYPE.DYNAMIC,
+          UrlbarUtils.RESULT_SOURCE.OTHER_NETWORK,
+          {
+            input,
+            output,
+            equal,
+            dynamicType: DYNAMIC_TYPE_NAME,
+          }
+        );
+        result.suggestedIndex = 1;
+        addCallback(this, result);
+        return;
       }
-    );
-    result.suggestedIndex = 1;
-    addCallback(this, result);
+    }
   }
 
-  cancelQuery(queryContext) {
-    console.log("cancelQuery!", result);
-  }
+  cancelQuery(queryContext) {}
 
   pickResult(result) {
     console.log("Result picked!", result);
@@ -126,5 +107,5 @@ class UnitConverter extends UrlbarProvider {
 }
 
 (async function() {
-  addProvider(new UnitConverter());
+  addProvider(new DynamicConverter());
 })();
