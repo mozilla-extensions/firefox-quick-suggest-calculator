@@ -55,9 +55,13 @@ class TimezoneConverter {
   static TIME_REGEX = "(1[0-2]|0?[1-9])(:([0-5][0-9]))?\\s*([ap]m)?";
   static TIMEZONE_REGEX = "\\w+";
   static QUERY_REGEX = new RegExp(
-    `^(${TimezoneConverter.TIME_REGEX})\\s*(${TimezoneConverter.TIMEZONE_REGEX})\\s+in\\s+(${TimezoneConverter.TIMEZONE_REGEX})`,
+    `^(${TimezoneConverter.TIME_REGEX}|now)\\s*(${TimezoneConverter.TIMEZONE_REGEX})?\\s+in\\s+(${TimezoneConverter.TIMEZONE_REGEX})`,
     "i"
   );
+//  static QUERY_REGEX = new RegExp(
+//    `^(${TimezoneConverter.TIME_REGEX})\\s*(${TimezoneConverter.TIMEZONE_REGEX})?\\s+in\\s+(${TimezoneConverter.TIMEZONE_REGEX})`,
+//    "i"
+//  );
 
   isActive(queryContext) {
     const regexResult = TimezoneConverter.QUERY_REGEX.exec(queryContext.searchString);
@@ -65,46 +69,62 @@ class TimezoneConverter {
       return false;
     }
 
-    const inputUnit = regexResult[6].toUpperCase();
-    const outputUnit = regexResult[7].toUpperCase();
+    const inputTime = regexResult[1].toUpperCase();
+    const inputTimezone = regexResult[6]?.toUpperCase();
+    const outputTimezone = regexResult[7].toUpperCase();
 
-    return TimezoneConverter.TIMEZONES[inputUnit] !== undefined && TimezoneConverter.TIMEZONES[outputUnit] !== undefined;
+    return (
+      inputTime === "NOW"
+      || !inputTimezone
+      || TimezoneConverter.TIMEZONES[inputTimezone] !== undefined
+    )
+    && TimezoneConverter.TIMEZONES[outputTimezone] !== undefined;
   }
 
   startQuery(queryContext) {
     const regexResult = TimezoneConverter.QUERY_REGEX.exec(queryContext.searchString);
-    const inputHours = Number(regexResult[2]);
-    const inputMinutes = regexResult[4] ? Number(regexResult[4]) : 0;
-    const inputAMPM = regexResult[5]?.toLowerCase() || "";
-    const inputMeridianHourShift = inputAMPM === "pm" ? 12 : 0;
-    const inputAbsoluteMinutes = (inputHours + inputMeridianHourShift) * 60 + inputMinutes;
-
-    const inputUnit = regexResult[6].toUpperCase();
-    const outputUnit = regexResult[7].toUpperCase();
-
-    const outputAbsoluteMinutes =
-      inputAbsoluteMinutes - TimezoneConverter.TIMEZONES[inputUnit] * 60 + TimezoneConverter.TIMEZONES[outputUnit] * 60;
-
-    let outputHours = parseInt(outputAbsoluteMinutes / 60);
-    if (outputHours < 0) {
-      outputHours += 24;
-    } else if (outputHours > 24) {
-      outputHours -= 24;
+    const inputTime = regexResult[1].toUpperCase();
+    const inputDate = new Date();
+    let isMeridiemNeeded = false;
+    if (inputTime !== "NOW") {
+      const inputHours = Number(regexResult[2]);
+      const inputMinutes = regexResult[4] ? Number(regexResult[4]) : 0;
+      const inputAMPM = regexResult[5]?.toLowerCase() || "";
+      const inputMeridianHourShift = inputAMPM === "pm" ? 12 : 0;
+      inputDate.setHours(inputHours + inputMeridianHourShift);
+      inputDate.setMinutes(inputMinutes);
+      isMeridiemNeeded = !!inputAMPM;
     }
 
-    let outputAMPM = "";
-    if (inputAMPM) {
-      outputAMPM = outputHours > 12 ? "pm" : "am";
-      outputHours = outputHours > 12 ? outputHours - 12 : outputHours;
-    }
+    const inputTimezone = regexResult[6]?.toUpperCase();
+    const inputOffset = inputTimezone
+      ? TimezoneConverter.TIMEZONES[inputTimezone] * 60
+      : inputDate.getTimezoneOffset();
+    const outputTimezone = regexResult[7].toUpperCase();
+    const outputOffset = TimezoneConverter.TIMEZONES[outputTimezone] * 60;
 
-    let outputMinutes = outputAbsoluteMinutes % 60;
-    outputMinutes = outputMinutes < 10 ? "0" + outputMinutes : outputMinutes;
+    const outputDate = new Date(inputDate.getTime());
+    outputDate.setMinutes(outputDate.getMinutes() - inputOffset + outputOffset);
 
     return {
-      input: `${inputHours}:${inputMinutes < 10 ? "0" + inputMinutes : inputMinutes}${inputAMPM} ${inputUnit}`,
+      input: this.format(inputDate, inputTimezone, isMeridiemNeeded),
       equal: " = ",
-      output: `${outputHours}:${outputMinutes}${outputAMPM} ${outputUnit}`,
+      output: this.format(outputDate, outputTimezone, isMeridiemNeeded),
     };
+  }
+
+  format(date, timezone = "", isMeridiemNeeded) {
+    let meridiem = ""
+    if (isMeridiemNeeded) {
+      if (date.getHours() > 12) {
+        meridiem = "pm";
+        date.setHours(date.getHours() - 12);
+      } else {
+        meridiem = "am";
+      }
+    }
+
+    const time = date.toLocaleTimeString().slice(0 ,5);
+    return `${time}${meridiem} ${timezone}`;
   }
 }
