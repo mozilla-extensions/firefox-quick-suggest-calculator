@@ -52,7 +52,7 @@ class Timezone {
     "NZD": 13,
   }
 
-  static TIME_REGEX = "(1[0-2]|0?[1-9])(:([0-5][0-9]))?\\s*([ap]m)?";
+  static TIME_REGEX = "([0-2]?[0-9])(:([0-5][0-9]))?\\s*([ap]m)?";
   static TIMEZONE_REGEX = "\\w+";
   static QUERY_REGEX = new RegExp(
     `^(${Timezone.TIME_REGEX}|now)\\s*(${Timezone.TIMEZONE_REGEX})?\\s+in\\s+(${Timezone.TIMEZONE_REGEX})`,
