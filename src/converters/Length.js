@@ -4,8 +4,8 @@
 
 "use strict";
 
-class Length {
-  static UNIT = {
+class Length extends SimpleUnitConverter {
+  static UNITS = {
     "meter": 1,
     "m": 1,
     "nanometer": 1000000000,
@@ -22,36 +22,7 @@ class Length {
     "inch": 39.37007874,
   };
 
-  static NUMBER_REGEX = "\\d+(?:\\.\\d+)?\\s*";
-  static UNIT_REGEX = "\\w+";
-  static QUERY_REGEX = new RegExp(
-    `^(${this.NUMBER_REGEX})(${this.UNIT_REGEX})\\s+in\\s+(${this.UNIT_REGEX})`,
-    "i"
-  );
-
-  isActive(queryContext) {
-    const regexResult = Length.QUERY_REGEX.exec(queryContext.searchString);
-    if (!regexResult) {
-      return false;
-    }
-
-    const inputUnit = regexResult[2];
-    const outputUnit = regexResult[3];
-
-    return Length.UNIT[inputUnit] && Length.UNIT[outputUnit];
-  }
-
-  startQuery(queryContext) {
-    const regexResult = Length.QUERY_REGEX.exec(queryContext.searchString);
-    const inputNumber = Number(regexResult[1]);
-    const inputUnit = regexResult[2];
-    const outputUnit = regexResult[3];
-    const outputNumber = inputNumber / Length.UNIT[inputUnit] * Length.UNIT[outputUnit];
-
-    return {
-      input: `${inputNumber}${inputUnit}`,
-      equal: " = ",
-      output: `${outputNumber}${outputUnit}`,
-    };
+  constructor() {
+    super(Length.UNITS);
   }
 }
