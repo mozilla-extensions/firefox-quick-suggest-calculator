@@ -21,8 +21,8 @@
   "background": {
     "scripts": [
       "shim.js",
-      "converters/UnitConverter.js",
-      "converters/TimezoneConverter.js",
+      "converters/Length.js",
+      "converters/Timezone.js",
       "background.js"
     ]
   },

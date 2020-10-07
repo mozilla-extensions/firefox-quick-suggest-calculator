@@ -4,8 +4,8 @@
 
 "use strict";
 
-class UnitConverter {
-  static LENGTH = {
+class Length {
+  static UNIT = {
     "meter": 1,
     "m": 1,
     "nanometer": 1000000000,
@@ -25,12 +25,12 @@ class UnitConverter {
   static NUMBER_REGEX = "\\d+(?:\\.\\d+)?\\s*";
   static UNIT_REGEX = "\\w+";
   static QUERY_REGEX = new RegExp(
-    `^(${UnitConverter.NUMBER_REGEX})(${UnitConverter.UNIT_REGEX})\\s+in\\s+(${UnitConverter.UNIT_REGEX})`,
+    `^(${this.NUMBER_REGEX})(${this.UNIT_REGEX})\\s+in\\s+(${this.UNIT_REGEX})`,
     "i"
   );
 
   isActive(queryContext) {
-    const regexResult = UnitConverter.QUERY_REGEX.exec(queryContext.searchString);
+    const regexResult = Length.QUERY_REGEX.exec(queryContext.searchString);
     if (!regexResult) {
       return false;
     }
@@ -38,16 +38,15 @@ class UnitConverter {
     const inputUnit = regexResult[2];
     const outputUnit = regexResult[3];
 
-    return UnitConverter.LENGTH[inputUnit] && UnitConverter.LENGTH[outputUnit];
+    return Length.UNIT[inputUnit] && Length.UNIT[outputUnit];
   }
 
   startQuery(queryContext) {
-    const regexResult = UnitConverter.QUERY_REGEX.exec(queryContext.searchString);
+    const regexResult = Length.QUERY_REGEX.exec(queryContext.searchString);
     const inputNumber = Number(regexResult[1]);
     const inputUnit = regexResult[2];
     const outputUnit = regexResult[3];
-    const outputNumber =
-      inputNumber / UnitConverter.LENGTH[inputUnit] * UnitConverter.LENGTH[outputUnit];
+    const outputNumber = inputNumber / Length.UNIT[inputUnit] * Length.UNIT[outputUnit];
 
     return {
       input: `${inputNumber}${inputUnit}`,
