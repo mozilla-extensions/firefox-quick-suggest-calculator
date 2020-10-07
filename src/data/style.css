@@ -1,5 +1,9 @@
 /* CSS for unit conversion */
 
+.urlbarView-dynamic-dynamicConversion-info {
+  font-weight: 700;
+}
+
 .urlbarView-dynamic-dynamicConversion-inputValue,
 .urlbarView-dynamic-dynamicConversion-inputUnit {
   display: none;
