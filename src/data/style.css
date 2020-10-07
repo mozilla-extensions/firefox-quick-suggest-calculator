@@ -1,1 +1,14 @@
 /* CSS for unit conversion */
+
+.urlbarView-dynamic-dynamicConversion-inputValue,
+.urlbarView-dynamic-dynamicConversion-inputUnit {
+  display: none;
+}
+
+.urlbarView-dynamic-dynamicConversion-equal {
+  padding-inline: 0.25em;
+}
+
+.urlbarView-dynamic-dynamicConversion-outputUnit {
+  padding-inline-start: 0.25em;
+}
