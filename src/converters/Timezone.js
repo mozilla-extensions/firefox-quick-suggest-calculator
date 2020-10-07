@@ -4,7 +4,7 @@
 
 "use strict";
 
-class TimezoneConverter {
+class Timezone {
   static TIMEZONES = {
     "IDLW": -12,
     "NT": -11,
@@ -55,16 +55,12 @@ class TimezoneConverter {
   static TIME_REGEX = "(1[0-2]|0?[1-9])(:([0-5][0-9]))?\\s*([ap]m)?";
   static TIMEZONE_REGEX = "\\w+";
   static QUERY_REGEX = new RegExp(
-    `^(${TimezoneConverter.TIME_REGEX}|now)\\s*(${TimezoneConverter.TIMEZONE_REGEX})?\\s+in\\s+(${TimezoneConverter.TIMEZONE_REGEX})`,
+    `^(${Timezone.TIME_REGEX}|now)\\s*(${Timezone.TIMEZONE_REGEX})?\\s+in\\s+(${Timezone.TIMEZONE_REGEX})`,
     "i"
   );
-//  static QUERY_REGEX = new RegExp(
-//    `^(${TimezoneConverter.TIME_REGEX})\\s*(${TimezoneConverter.TIMEZONE_REGEX})?\\s+in\\s+(${TimezoneConverter.TIMEZONE_REGEX})`,
-//    "i"
-//  );
 
   isActive(queryContext) {
-    const regexResult = TimezoneConverter.QUERY_REGEX.exec(queryContext.searchString);
+    const regexResult = Timezone.QUERY_REGEX.exec(queryContext.searchString);
     if (!regexResult) {
       return false;
     }
@@ -76,13 +72,13 @@ class TimezoneConverter {
     return (
       inputTime === "NOW"
       || !inputTimezone
-      || TimezoneConverter.TIMEZONES[inputTimezone] !== undefined
+      || Timezone.TIMEZONES[inputTimezone] !== undefined
     )
-    && TimezoneConverter.TIMEZONES[outputTimezone] !== undefined;
+    && Timezone.TIMEZONES[outputTimezone] !== undefined;
   }
 
   startQuery(queryContext) {
-    const regexResult = TimezoneConverter.QUERY_REGEX.exec(queryContext.searchString);
+    const regexResult = Timezone.QUERY_REGEX.exec(queryContext.searchString);
     const inputTime = regexResult[1].toUpperCase();
     const inputDate = new Date();
     let isMeridiemNeeded = false;
@@ -98,10 +94,10 @@ class TimezoneConverter {
 
     const inputTimezone = regexResult[6]?.toUpperCase();
     const inputOffset = inputTimezone
-      ? TimezoneConverter.TIMEZONES[inputTimezone] * 60
-      : inputDate.getTimezoneOffset();
+      ? Timezone.TIMEZONES[inputTimezone] * 60
+      : -inputDate.getTimezoneOffset();
     const outputTimezone = regexResult[7].toUpperCase();
-    const outputOffset = TimezoneConverter.TIMEZONES[outputTimezone] * 60;
+    const outputOffset = Timezone.TIMEZONES[outputTimezone] * 60;
 
     const outputDate = new Date(inputDate.getTime());
     outputDate.setMinutes(outputDate.getMinutes() - inputOffset + outputOffset);
@@ -124,7 +120,7 @@ class TimezoneConverter {
       }
     }
 
-    const time = date.toLocaleTimeString().slice(0 ,5);
+    const time = date.toLocaleTimeString().substring(0, 4);
     return `${time}${meridiem} ${timezone}`;
   }
 }

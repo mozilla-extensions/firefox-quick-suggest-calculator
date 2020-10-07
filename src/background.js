@@ -7,8 +7,9 @@
 const DYNAMIC_TYPE_NAME = "dynamicConversion";
 
 const CONVERTERS = [
-  new UnitConverter(),
-  new TimezoneConverter(),
+  new Length(),
+  new Mass(),
+  new Timezone(),
 ];
 
 class DynamicConverter extends UrlbarProvider {
