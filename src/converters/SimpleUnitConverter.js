@@ -36,9 +36,10 @@ class SimpleUnitConverter {
     const outputNumber = inputNumber / this.units[inputUnit] * this.units[outputUnit];
 
     return {
-      input: `${inputNumber}${inputUnit}`,
-      equal: " = ",
-      output: `${outputNumber}${outputUnit}`,
+      inputValue: inputNumber,
+      inputUnit: inputUnit,
+      outputValue: outputNumber,
+      outputUnit: outputUnit,
     };
   }
 }

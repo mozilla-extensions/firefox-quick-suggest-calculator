@@ -27,7 +27,11 @@ class DynamicConverter extends UrlbarProvider {
           tag: "div",
           children: [
             {
-              name: "input",
+              name: "inputValue",
+              tag: "span",
+            },
+            {
+              name: "inputUnit",
               tag: "span",
             },
             {
@@ -35,7 +39,11 @@ class DynamicConverter extends UrlbarProvider {
               tag: "span",
             },
             {
-              name: "output",
+              name: "outputValue",
+              tag: "span",
+            },
+            {
+              name: "outputUnit",
               tag: "span",
             },
           ],
@@ -64,14 +72,20 @@ class DynamicConverter extends UrlbarProvider {
 
   getViewUpdate(result) {
     const viewUpdate = {
-      input: {
-        textContent: result.payload.input,
+      inputValue: {
+        textContent: result.payload.inputValue,
+      },
+      inputUnit: {
+        textContent: result.payload.inputUnit,
+      },
+      outputValue: {
+        textContent: result.payload.outputValue,
+      },
+      outputUnit: {
+        textContent: result.payload.outputUnit,
       },
       equal: {
-        textContent: result.payload.equal,
-      },
-      output: {
-        textContent: result.payload.output,
+        textContent: "=",
       },
     };
 
@@ -81,15 +95,21 @@ class DynamicConverter extends UrlbarProvider {
   startQuery(queryContext, addCallback) {
     for (const converter of CONVERTERS) {
       if (converter.isActive(queryContext)) {
-        const { input, output, equal } = converter.startQuery(queryContext);
+        const {
+          inputValue,
+          inputUnit,
+          outputValue,
+          outputUnit,
+        } = converter.startQuery(queryContext);
 
         const result = new UrlbarResult(
           UrlbarUtils.RESULT_TYPE.DYNAMIC,
           UrlbarUtils.RESULT_SOURCE.OTHER_NETWORK,
           {
-            input,
-            output,
-            equal,
+            inputValue,
+            inputUnit,
+            outputValue,
+            outputUnit,
             dynamicType: DYNAMIC_TYPE_NAME,
           }
         );

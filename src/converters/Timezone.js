@@ -103,13 +103,14 @@ class Timezone {
     outputDate.setMinutes(outputDate.getMinutes() - inputOffset + outputOffset);
 
     return {
-      input: this.format(inputDate, inputTimezone, isMeridiemNeeded),
-      equal: " = ",
-      output: this.format(outputDate, outputTimezone, isMeridiemNeeded),
+      inputValue: this.format(inputDate, isMeridiemNeeded),
+      inputUnit: inputTimezone,
+      outputValue: this.format(outputDate, isMeridiemNeeded),
+      outputUnit: outputTimezone,
     };
   }
 
-  format(date, timezone = "", isMeridiemNeeded) {
+  format(date, isMeridiemNeeded) {
     let meridiem = ""
     if (isMeridiemNeeded) {
       if (date.getHours() > 12) {
@@ -120,7 +121,10 @@ class Timezone {
       }
     }
 
-    const time = date.toLocaleTimeString().substring(0, 4);
-    return `${time}${meridiem} ${timezone}`;
+    let time = date.toLocaleTimeString().slice(0, 5);
+    if (time.match(/:$/)) {
+      time = time.substring(0, 4);
+    }
+    return `${time}${meridiem}`;
   }
 }
