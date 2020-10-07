@@ -55,7 +55,7 @@ class Timezone {
   static TIME_REGEX = "([0-2]?[0-9])(:([0-5][0-9]))?\\s*([ap]m)?";
   static TIMEZONE_REGEX = "\\w+";
   static QUERY_REGEX = new RegExp(
-    `^(${Timezone.TIME_REGEX}|now)\\s*(${Timezone.TIMEZONE_REGEX})?\\s+in\\s+(${Timezone.TIMEZONE_REGEX})`,
+    `^(${Timezone.TIME_REGEX}|now)\\s*(${Timezone.TIMEZONE_REGEX})?\\s+in\\s+(${Timezone.TIMEZONE_REGEX}|here)`,
     "i"
   );
 
@@ -73,8 +73,10 @@ class Timezone {
       inputTime === "NOW"
       || !inputTimezone
       || Timezone.TIMEZONES[inputTimezone] !== undefined
+    ) && (
+      outputTimezone === "HERE"
+      || Timezone.TIMEZONES[outputTimezone] !== undefined
     )
-    && Timezone.TIMEZONES[outputTimezone] !== undefined;
   }
 
   startQuery(queryContext) {
@@ -96,8 +98,17 @@ class Timezone {
     const inputOffset = inputTimezone
       ? Timezone.TIMEZONES[inputTimezone] * 60
       : -inputDate.getTimezoneOffset();
-    const outputTimezone = regexResult[7].toUpperCase();
-    const outputOffset = Timezone.TIMEZONES[outputTimezone] * 60;
+    let outputTimezone = regexResult[7].toUpperCase();
+    let outputOffset;
+    if (outputTimezone === "HERE") {
+      outputOffset = -inputDate.getTimezoneOffset();
+      const sign = -inputDate.getTimezoneOffset() > 0 ? "+" : "-";
+      const hours = Math.abs(parseInt(-inputDate.getTimezoneOffset() / 60));
+      const minutes = inputDate.getTimezoneOffset() % 60 * 60;
+      outputTimezone = `UTC${sign}${hours}${minutes.toString().padStart(2, "0")}`;
+    } else {
+      outputOffset = Timezone.TIMEZONES[outputTimezone] * 60;
+    }
 
     const outputDate = new Date(inputDate.getTime());
     outputDate.setMinutes(outputDate.getMinutes() - inputOffset + outputOffset);
