@@ -20,23 +20,20 @@ class DynamicConverter extends UrlbarProvider {
       stylesheet: "data/style.css",
       attributes: {
         role: "group",
+        title: "Copy to clipboard",
       },
       children: [
         {
-          name: "info",
+          name: "content",
           tag: "div",
+          attributes: {
+            role: "button",
+            title: "Copy to clipboard",
+          },
           children: [
             {
-              name: "inputValue",
-              tag: "span",
-            },
-            {
-              name: "inputUnit",
-              tag: "span",
-            },
-            {
-              name: "equal",
-              tag: "span",
+              name: "icon",
+              tag: "img",
             },
             {
               name: "outputValue",
@@ -72,20 +69,16 @@ class DynamicConverter extends UrlbarProvider {
 
   getViewUpdate(result) {
     const viewUpdate = {
-      inputValue: {
-        textContent: result.payload.inputValue,
-      },
-      inputUnit: {
-        textContent: result.payload.inputUnit,
+      icon: {
+        attributes: {
+          src: "chrome://browser/skin/edit-copy.svg",
+        },
       },
       outputValue: {
         textContent: result.payload.outputValue,
       },
       outputUnit: {
         textContent: result.payload.outputUnit,
-      },
-      equal: {
-        textContent: "=",
       },
     };
 
@@ -96,8 +89,6 @@ class DynamicConverter extends UrlbarProvider {
     for (const converter of CONVERTERS) {
       if (converter.isActive(queryContext)) {
         const {
-          inputValue,
-          inputUnit,
           outputValue,
           outputUnit,
         } = converter.startQuery(queryContext);
@@ -106,8 +97,6 @@ class DynamicConverter extends UrlbarProvider {
           UrlbarUtils.RESULT_TYPE.DYNAMIC,
           UrlbarUtils.RESULT_SOURCE.OTHER_NETWORK,
           {
-            inputValue,
-            inputUnit,
             outputValue,
             outputUnit,
             dynamicType: DYNAMIC_TYPE_NAME,
@@ -122,8 +111,9 @@ class DynamicConverter extends UrlbarProvider {
 
   cancelQuery(queryContext) {}
 
-  pickResult(result) {
-    console.log("Result picked!", result);
+  async pickResult({ payload }) {
+    const text = payload.outputValue +" "+ payload.outputUnit;
+    browser.experiments.clipboard.copy(text);
   }
 }
 

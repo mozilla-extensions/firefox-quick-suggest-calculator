@@ -30,6 +30,14 @@
   },
   "incognito": "spanning",
   "experiment_apis": {
+    "experiments_clipboard": {
+      "schema": "experiments/clipboard/schema.json",
+      "parent": {
+        "scopes": ["addon_parent"],
+        "paths": [["experiments", "clipboard"]],
+        "script": "experiments/clipboard/api.js"
+      }
+    },
     "experiments_urlbar": {
       "schema": "experiments/urlbar/schema.json",
       "parent": {

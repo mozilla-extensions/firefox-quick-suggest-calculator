@@ -1,16 +1,25 @@
 /* CSS for unit conversion */
 
-.urlbarView-dynamic-dynamicConversion-info {
+.urlbarView-dynamic-dynamicConversion-content {
   font-weight: 700;
+  display: flex;
+  align-items: center;
+  position: relative;
+  left: -8px;
+  width: calc(100% + 8px);
 }
 
-.urlbarView-dynamic-dynamicConversion-inputValue,
-.urlbarView-dynamic-dynamicConversion-inputUnit {
-  display: none;
+.urlbarView-dynamic-dynamicConversion-content[selected] {
+  background-color: var(--autocomplete-popup-highlight-background);
+  color: var(--autocomplete-popup-highlight-color);
 }
 
-.urlbarView-dynamic-dynamicConversion-equal {
-  padding-inline: 0.25em;
+.urlbarView-dynamic-dynamicConversion-icon {
+  width: 16px;
+  height: 16px;
+  -moz-context-properties: fill;
+  fill: currentColor;
+  padding: 8px;
 }
 
 .urlbarView-dynamic-dynamicConversion-outputUnit {
