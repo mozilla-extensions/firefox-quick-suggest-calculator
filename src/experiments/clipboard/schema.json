@@ -1,0 +1,18 @@
+[
+  {
+    "namespace": "experiments.clipboard",
+    "description": "APIs supporting clipboard experiments",
+    "functions": [
+      {
+        "name": "copy",
+        "type": "function",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "text"
+          }
+        ]
+      }
+    ]
+  }
+]
