@@ -24,6 +24,7 @@
       "converters/SimpleUnitConverter.js",
       "converters/Length.js",
       "converters/Mass.js",
+      "converters/Temperature.js",
       "converters/Timezone.js",
       "background.js"
     ]

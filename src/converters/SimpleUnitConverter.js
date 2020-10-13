@@ -22,8 +22,8 @@ class SimpleUnitConverter {
       return false;
     }
 
-    const inputUnit = regexResult[2];
-    const outputUnit = regexResult[3];
+    const inputUnit = regexResult[2].toLowerCase();
+    const outputUnit = regexResult[3].toLowerCase();
 
     return this.units[inputUnit] && this.units[outputUnit];
   }
@@ -31,8 +31,8 @@ class SimpleUnitConverter {
   startQuery(queryContext) {
     const regexResult = Length.QUERY_REGEX.exec(queryContext.searchString);
     const inputNumber = Number(regexResult[1]);
-    const inputUnit = regexResult[2];
-    const outputUnit = regexResult[3];
+    const inputUnit = regexResult[2].toLowerCase();
+    const outputUnit = regexResult[3].toLowerCase();
     const outputNumber = inputNumber / this.units[inputUnit] * this.units[outputUnit];
 
     return {
