@@ -24,6 +24,13 @@ Search example:
 Supported units:
 + `kilogram`, `kg`, `gram`, `g`, `milligram`, `mg`, `ton`, `t`, `longton`, `l.t.`, `l/t`, `shortton`, `s.t.`, `s/t`, `pound`, `lbs`, `lb`, `ounce`, `oz`, `carat`, `ffd`
 
+### Temperature
+Search example:
++ `1c in fahrenheit`
+
+Supported units:
++ `celsius`, `c`, `kelvin`, `k`, `fahrenheit`, `f`
+
 ### Timezone
 Search example:
 + `10:00 jst in pst`
