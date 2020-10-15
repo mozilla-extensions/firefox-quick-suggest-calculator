@@ -22,6 +22,7 @@
     "scripts": [
       "shim.js",
       "converters/SimpleUnitConverter.js",
+      "converters/Angle.js",
       "converters/Length.js",
       "converters/Mass.js",
       "converters/Temperature.js",

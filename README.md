@@ -10,6 +10,13 @@
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/kChK0k1AYF0/0.jpg)](https://www.youtube.com/watch?v=kChK0k1AYF0RE)
 
 ## Supported converters
+### Angle
+Search example:
++ `1 degree in rad`
+
+Supporetd units:
++ `degree`, `d`, `radian`, `rad`, `r`, `gradian`, `grad`, `g`, `minute`, `m`, `second`, `s`,  `sign`, `mil`, `revolution`, `circle`, `turn`, `quadrant`, `rightangle`, `sextant`
+
 ### Length
 Search example:
 + `1cm in inch`
@@ -41,4 +48,3 @@ Search example:
 
 Supported timezones:
 + `IDLW`, `NT`, `HST`, `AKST`, `PST`, `AKDT`, `MST`, `PDT`, `CST`, `MDT`, `EST`, `CDT`, `EDT`, `AST`, `GUY`, `ADT`, `AT`, `UTC`, `GMT`, `Z`, `WET`, `WEST`, `CET`, `BST`, `IST`, `CEST`, `EET`, `EEST`, `MSK`, `MSD`, `ZP4`, `ZP5`, `ZP6`, `WAST`, `AWST`, `WST`, `JST`, `ACST`, `ACDT`, `AEST`, `AEDT`, `NZST`, `IDLE`, `NZD`.
-
