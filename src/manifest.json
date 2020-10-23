@@ -23,6 +23,7 @@
       "shim.js",
       "converters/SimpleUnitConverter.js",
       "converters/Angle.js",
+      "converters/Force.js",
       "converters/Length.js",
       "converters/Mass.js",
       "converters/Temperature.js",
