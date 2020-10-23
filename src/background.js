@@ -8,6 +8,7 @@ const DYNAMIC_TYPE_NAME = "dynamicConversion";
 
 const CONVERTERS = [
   new Angle(),
+  new Force(),
   new Length(),
   new Mass(),
   new Temperature(),

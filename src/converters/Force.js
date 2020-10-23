@@ -1,0 +1,76 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+"use strict";
+
+class Force extends SimpleUnitConverter {
+  static UNITS = {
+    "newton": 1,
+    "n": 1,
+    "kilonewton": 0.001,
+    "kn": 0.001,
+    "gram-force": 101.9716213,
+    "gf": 101.9716213,
+    "kilogram-force": 0.1019716213,
+    "kgf": 0.1019716213,
+    "ton-force": 0.0001019716213,
+    "tf": 0.0001019716213,
+    "exanewton": 1.0E-18,
+    "en": 1.0E-18,
+    "petanewton": 1.0E-15,
+    "pt": 1.0E-15,
+    "teranewton": 1.0E-12,
+    "tn": 1.0E-12,
+    "giganewton": 1.0E-9,
+    "gn": 1.0E-9,
+    "meganewton": 0.000001,
+    "mn": 0.000001,
+    "hectonewton": 0.01,
+    "hn": 0.01,
+    "dekanewton": 0.1,
+    "dan": 0.1,
+    "decinewton": 10,
+    "dn": 10,
+    "centinewton": 100,
+    "cn": 100,
+    "millinewton": 1000,
+    "cn": 1000,
+    "micronewton": 1000000,
+    "µn": 1000000,
+    "nanonewton": 1000000000,
+    "nn": 1000000000,
+    "piconewton": 1000000000000,
+    "pn": 1000000000000,
+    "femtonewton": 1000000000000000,
+    "fn": 1000000000000000,
+    "attonewton": 1000000000000000000,
+    "an": 1000000000000000000,
+    "dyne": 100000,
+    "dyn": 100000,
+    "joule/meter": 1,
+    "j/m": 1,
+    "joule/centimeter": 100,
+    "j/cm": 100,
+    "ton-force-short": 0.0001124045,
+    "short": 0.0001124045,
+    "ton-force-long": 0.0001003611,
+    "tonf": 0.0001003611,
+    "kip-force": 0.0002248089,
+    "kipf": 0.0002248089,
+    "pound-force": 0.2248089431,
+    "lbf": 0.2248089431,
+    "ounce-force": 3.5969430896,
+    "ozf": 3.5969430896,
+    "poundal": 7.2330138512,
+    "pdl": 7.2330138512,
+    "pond": 101.9716213,
+    "p": 101.9716213,
+    "kilopond": 0.1019716213,
+    "kp": 0.1019716213,
+  };
+
+  constructor() {
+    super(Force.UNITS);
+  }
+}

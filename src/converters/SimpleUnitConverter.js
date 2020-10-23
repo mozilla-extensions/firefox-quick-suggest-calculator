@@ -6,7 +6,7 @@
 
 class SimpleUnitConverter {
   static NUMBER_REGEX = "\\d+(?:\\.\\d+)?\\s*";
-  static UNIT_REGEX = "[A-Za-z0-9_./]+";
+  static UNIT_REGEX = "[A-Za-z0-9_./-]+";
   static QUERY_REGEX = new RegExp(
     `^(${this.NUMBER_REGEX})(${this.UNIT_REGEX})\\s+in\\s+(${this.UNIT_REGEX})`,
     "i"
