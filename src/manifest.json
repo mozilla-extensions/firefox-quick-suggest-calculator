@@ -1,17 +1,11 @@
 {
   "manifest_version": 2,
-  "name": "Dynamic Unit Conversion",
-  "version": "1.0a",
-  "description": "An example extension for dynamic result types.",
+  "name": "Urlbar Calculator",
+  "version": "1.0",
+  "description": "An example extension for urlbar calculations.",
   "applications": {
     "gecko": {
-      "id": "urlbar-unit-conversion@mozilla.org",
-      "strict_min_version": "69"
-    }
-  },
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "urlbar-unit-conversion@mozilla.org",
+      "id": "urlbar-calculator@mozilla.org",
       "strict_min_version": "69"
     }
   },
@@ -21,13 +15,7 @@
   "background": {
     "scripts": [
       "shim.js",
-      "converters/SimpleUnitConverter.js",
-      "converters/Angle.js",
-      "converters/Force.js",
-      "converters/Length.js",
-      "converters/Mass.js",
-      "converters/Temperature.js",
-      "converters/Timezone.js",
+      "calculator.js",
       "background.js"
     ]
   },

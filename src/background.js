@@ -4,18 +4,12 @@
 
 "use strict";
 
-const DYNAMIC_TYPE_NAME = "dynamicConversion";
+/* import-globals-from shim.js */
+/* global Calculator */
 
-const CONVERTERS = [
-  new Angle(),
-  new Force(),
-  new Length(),
-  new Mass(),
-  new Temperature(),
-  new Timezone(),
-];
+const DYNAMIC_TYPE_NAME = "dynamicCalculator";
 
-class DynamicConverter extends UrlbarProvider {
+class DynamicCalculator extends UrlbarProvider {
   constructor() {
     super();
     UrlbarResult.addDynamicResultType(DYNAMIC_TYPE_NAME);
@@ -43,17 +37,17 @@ class DynamicConverter extends UrlbarProvider {
               tag: "span",
             },
             {
-              name: "outputUnit",
+              name: "outputAction",
               tag: "span",
             },
           ],
         },
-      ]
+      ],
     });
   }
 
   get name() {
-    return "DynamicConverter";
+    return DYNAMIC_TYPE_NAME;
   }
 
   getPriority(queryContext) {
@@ -61,13 +55,12 @@ class DynamicConverter extends UrlbarProvider {
   }
 
   isActive(queryContext) {
-    for (const converter of CONVERTERS) {
-      if (converter.isActive(queryContext)) {
-        return true;
-      }
+    try {
+      this._postfix = Calculator.infix2postfix(queryContext.searchString);
+      return true;
+    } catch (e) {
+      return false;
     }
-
-    return false;
   }
 
   getViewUpdate(result) {
@@ -78,10 +71,10 @@ class DynamicConverter extends UrlbarProvider {
         },
       },
       outputValue: {
-        textContent: result.payload.outputValue,
+        textContent: `= ${result.payload.outputValue}`,
       },
-      outputUnit: {
-        textContent: result.payload.outputUnit,
+      outputAction: {
+        textContent: "Copy to clipboard",
       },
     };
 
@@ -89,37 +82,26 @@ class DynamicConverter extends UrlbarProvider {
   }
 
   startQuery(queryContext, addCallback) {
-    for (const converter of CONVERTERS) {
-      if (converter.isActive(queryContext)) {
-        const {
-          outputValue,
-          outputUnit,
-        } = converter.startQuery(queryContext);
-
-        const result = new UrlbarResult(
-          UrlbarUtils.RESULT_TYPE.DYNAMIC,
-          UrlbarUtils.RESULT_SOURCE.OTHER_NETWORK,
-          {
-            outputValue,
-            outputUnit,
-            dynamicType: DYNAMIC_TYPE_NAME,
-          }
-        );
-        result.suggestedIndex = 1;
-        addCallback(this, result);
-        return;
+    let outputValue = Calculator.evaluatePostfix(this._postfix);
+    const result = new UrlbarResult(
+      UrlbarUtils.RESULT_TYPE.DYNAMIC,
+      UrlbarUtils.RESULT_SOURCE.OTHER_NETWORK,
+      {
+        outputValue,
+        dynamicType: DYNAMIC_TYPE_NAME,
       }
-    }
+    );
+    result.suggestedIndex = 1;
+    addCallback(this, result);
   }
 
   cancelQuery(queryContext) {}
 
   async pickResult({ payload }) {
-    const text = payload.outputValue +" "+ payload.outputUnit;
-    browser.experiments.clipboard.copy(text);
+    browser.experiments.clipboard.copy(payload.outputValue + "");
   }
 }
 
 (async function() {
-  addProvider(new DynamicConverter());
+  addProvider(new DynamicCalculator());
 })();

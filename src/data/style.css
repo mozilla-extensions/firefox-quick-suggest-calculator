@@ -1,6 +1,6 @@
 /* CSS for unit conversion */
 
-.urlbarView-dynamic-dynamicConversion-content {
+.urlbarView-dynamic-dynamicCalculator-content {
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -9,19 +9,41 @@
   width: calc(100% + 8px);
 }
 
-.urlbarView-dynamic-dynamicConversion-content[selected] {
+.urlbarView-dynamic-dynamicCalculator-content[selected] {
   background-color: var(--autocomplete-popup-highlight-background);
   color: var(--autocomplete-popup-highlight-color);
 }
 
-.urlbarView-dynamic-dynamicConversion-icon {
+.urlbarView-dynamic-dynamicCalculator-content:hover {
+  background: var(--arrowpanel-dimmed);
+}
+
+.urlbarView-dynamic-dynamicCalculator-icon {
   width: 16px;
   height: 16px;
-  -moz-context-properties: fill;
+  -moz-context-properties: fill, fill-opacity;
   fill: currentColor;
+  fill-opacity: .6;
   padding: 8px;
 }
 
-.urlbarView-dynamic-dynamicConversion-outputUnit {
+.urlbarView-dynamic-dynamicCalculator-outputUnit {
   padding-inline-start: 0.25em;
+}
+
+.urlbarView-dynamic-dynamicCalculator-outputAction {
+  font-size: .85em;
+  font-weight: normal;
+  visibility: collapse;
+}
+
+.urlbarView-dynamic-dynamicCalculator-content:hover .urlbarView-dynamic-dynamicCalculator-outputAction,
+.urlbarView-dynamic-dynamicCalculator-content[selected] .urlbarView-dynamic-dynamicCalculator-outputAction {
+  visibility: visible;
+}
+
+.urlbarView-dynamic-dynamicCalculator-outputAction::before {
+  content: "\2014";
+  margin: 0 .4em;
+  opacity: 0.6;
 }

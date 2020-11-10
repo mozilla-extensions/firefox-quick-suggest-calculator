@@ -1,50 +1,27 @@
-# Extension for dynamic unit conversion in urlbar
+# Extension Firefox URL Calculator
 
-## Instructions
-1. Clone this repo and install the dependencies.
-2. web-ext build
-3. In Firefox, set the pref extensions.experiments.enabled to true. Then open about:debugging.
-4. Install the .zip file created by web-ext build as a temporary add-on.
+This repo contains the code and tools to build a WebExtension that
+enables calculations to be evaluated when entered in the Url Bar.
 
-## How to use
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/kChK0k1AYF0/0.jpg)](https://www.youtube.com/watch?v=kChK0k1AYF0RE)
+## Install
 
-## Supported converters
-### Angle
-Search example:
-+ `1 degree in rad`
+These instructions will only work in Firefox Nightly:
 
-Supporetd units:
-+ `degree`, `d`, `radian`, `rad`, `r`, `gradian`, `grad`, `g`, `minute`, `m`, `second`, `s`,  `sign`, `mil`, `revolution`, `circle`, `turn`, `quadrant`, `rightangle`, `sextant`
+    1. In `about:config` make sure `extensions.experiments.enabled` is `true`.
+    2. Download [web-ext-artifacts/urlbar_calculator-1.0.zip](web-ext-artifacts/urlbar_calculator-1.0.zip)
+    3. Visit `about:debugging`, click on "This Nightly" then "Load Temporary Add-on", choose the downloaded file.
 
-### Length
-Search example:
-+ `1cm in inch`
 
-Supporetd units:
-+ `meter`, `m`, `nanometer`, `micrometer`, `millimeter`, `mm`, `centimeter`, `cm`, `kilometer`, `km`, `mile`, `yard`, `foot`,  `inch`
+## Development
 
-### Mass
-Search example:
-+ `1kg in ton`
+To install and develop the extension locally:
 
-Supported units:
-+ `kilogram`, `kg`, `gram`, `g`, `milligram`, `mg`, `ton`, `t`, `longton`, `l.t.`, `l/t`, `shortton`, `s.t.`, `s/t`, `pound`, `lbs`, `lb`, `ounce`, `oz`, `carat`, `ffd`
+  1. `git clone git@github.com:daleharvey/dynamic-calculator-extension.git`
+  2. `npm install`
+  3. `npm start`
 
-### Temperature
-Search example:
-+ `1c in fahrenheit`
+An instance of nightly should open with the extension enabled. If you
+change any files the extension should automatically reload.
 
-Supported units:
-+ `celsius`, `c`, `kelvin`, `k`, `fahrenheit`, `f`
-
-### Timezone
-Search example:
-+ `10:00 jst in pst`
-+ `10am jst in pst`
-+ `10am in pst`
-+ `now in pst`
-+ `10am pst in here`
-
-Supported timezones:
-+ `IDLW`, `NT`, `HST`, `AKST`, `PST`, `AKDT`, `MST`, `PDT`, `CST`, `MDT`, `EST`, `CDT`, `EDT`, `AST`, `GUY`, `ADT`, `AT`, `UTC`, `GMT`, `Z`, `WET`, `WEST`, `CET`, `BST`, `IST`, `CEST`, `EET`, `EEST`, `MSK`, `MSD`, `ZP4`, `ZP5`, `ZP6`, `WAST`, `AWST`, `WST`, `JST`, `ACST`, `ACDT`, `AEST`, `AEDT`, `NZST`, `IDLE`, `NZD`.
+## Demo Video
+[![Demo Video of Calculator](http://i3.ytimg.com/vi/VymUAUKvjAU/maxresdefault.jpg)](https://www.youtube.com/watch?v=VymUAUKvjAU)

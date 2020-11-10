@@ -1,31 +1,27 @@
-"use strict";
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-const browserTestConfig = require(
-  "eslint-plugin-mozilla/lib/configs/browser-test.js"
-);
+"use strict";
 
 module.exports = {
   extends: [
-    "plugin:mozilla/recommended"
+    "eslint:recommended",
+    "plugin:prettier/recommended",
+    "plugin:mozilla/recommended",
   ],
-  plugins: [
-    "mozilla"
-  ],
+  plugins: ["mozilla"],
+  parserOptions: {
+    ecmaVersion: 12,
+  },
   overrides: [
     {
-      files: [
-        "src/background.js",
-      ],
-      globals: {
-        "browser": true,
+      files: ["src/*.js"],
+      env: {
+        browser: false,
+        webextensions: true,
       },
     },
-    // Copied and modified from mozilla-central/.eslintrc.js
-    {
-      "files": [
-        "tests/**/browser/**",
-      ],
-      ...browserTestConfig,
-    },
   ],
-};
+  ignorePatterns: ["api.js"]
+}
