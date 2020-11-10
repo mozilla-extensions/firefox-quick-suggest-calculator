@@ -7,9 +7,9 @@ enables calculations to be evaluated when entered in the Url Bar.
 
 These instructions will only work in Firefox Nightly:
 
-    1. In `about:config` make sure `extensions.experiments.enabled` is `true`.
-    2. Download [web-ext-artifacts/urlbar_calculator-1.0.zip](web-ext-artifacts/urlbar_calculator-1.0.zip)
-    3. Visit `about:debugging`, click on "This Nightly" then "Load Temporary Add-on", choose the downloaded file.
+  1. In `about:config` make sure `extensions.experiments.enabled` is `true`.
+  2. Download [web-ext-artifacts/urlbar_calculator-1.0.zip](web-ext-artifacts/urlbar_calculator-1.0.zip)
+  3. Visit `about:debugging`, click on "This Nightly" then "Load Temporary Add-on", choose the downloaded file.
 
 
 ## Development
