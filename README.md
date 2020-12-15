@@ -25,3 +25,8 @@ change any files the extension should automatically reload.
 
 ## Demo Video
 [![Demo Video of Calculator](http://i3.ytimg.com/vi/VymUAUKvjAU/maxresdefault.jpg)](https://www.youtube.com/watch?v=VymUAUKvjAU)
+=======
+# XPI template repo
+
+## Special cases
+If a repository contains multiple `package.json` files, and any of them does not refer to an Add-on, a `dontbuild` file can be dropped in the directory to make automation skip building and signing.
