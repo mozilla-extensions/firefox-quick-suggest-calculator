@@ -5,7 +5,7 @@
 "use strict";
 
 const Calculator = {
-  operators: ["÷", "×", "-", "+", "*", "/"],
+  operators: ["÷", "×", "-", "+", "*", "/", "%"],
 
   // Holds the current symbols for calculation
   stack: [],
@@ -88,6 +88,9 @@ const Calculator = {
     },
     "/": function(a, b) {
       return a / b;
+    },
+    "%": function(a, b) {
+      return a % b;
     },
   },
 
@@ -248,7 +251,7 @@ Parser.prototype = {
       return false;
     }
 
-    if (["*", "/", "+", "-"].includes(this._chars[0])) {
+    if (["*", "/", "+", "-", "%"].includes(this._chars[0])) {
       this._tokens.push({ number: false, value: this._chars.shift() });
       return true;
     }
