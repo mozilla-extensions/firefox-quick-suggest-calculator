@@ -35,7 +35,7 @@
   "scripts": {
     "start": "web-ext run --firefox=nightly --browser-console",
     "lint": "eslint ./src && web-ext lint",
-    "build": "web-ext build",
+    "build": "web-ext build --overwrite-dest --filename firefox-quick-suggest-calculator.xpi",
     "test:unit": "mocha ./tests/unit/"
   }
 }
