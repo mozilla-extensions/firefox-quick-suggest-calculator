@@ -1,7 +1,7 @@
 {
-  "name": "dynamic-unit-conversion-extension",
+  "name": "firefox-quick-suggest-calculator",
   "version": "0.0.1",
-  "description": "An example extension for dynamic result types.",
+  "description": "An example extension for calculations in the url",
   "private": true,
   "license": "MPLv2",
   "webExt": {
